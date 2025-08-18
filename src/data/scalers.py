@@ -1,5 +1,8 @@
 import numpy as np
 
+import logging
+logger = logging.getLogger(__name__)
+
 class StandardScaler:
     def fit(self, X: np.ndarray):
         self.mean = np.mean(X, axis=0)
@@ -7,6 +10,7 @@ class StandardScaler:
         return self
     def transform(self, X: np.ndarray) -> np.ndarray:
         X_norm = (X - self.mean) / self.std
+        logger.debug(f"Scaled rang: [{X_norm.min()}, {X_norm.max()}]")
         return X_norm
     def fit_transform(self, X: np.ndarray) -> np.ndarray:
         return self.fit(X).transform(X)
@@ -18,6 +22,7 @@ class MaxAbsScaler:
         return self
     def transform(self, X: np.ndarray) -> np.ndarray:
         X_norm = X / self.max_per_col
+        logger.debug(f"Scaled rang: [{X_norm.min()}, {X_norm.max()}]")
         return X_norm
     def fit_transform(self, X: np.ndarray) -> np.ndarray:
         return self.fit(X).transform(X)
@@ -30,7 +35,6 @@ class MinMaxScaler:
         self.data_min_ = None
         self.data_max_ = None
     def fit(self, X):
-        # X = np.array(X)
         self.data_min_ = X.min(axis=0)
         self.data_max_ = X.max(axis=0)
         self.min_ = self.feature_range[0]
@@ -39,6 +43,7 @@ class MinMaxScaler:
     def transform(self, X):
         scale = (self.max_ - self.min_) / (self.data_max_ - self.data_min_)
         X_scaled = self.min_ + (X - self.data_min_) * scale
+        logger.debug(f"Scaled rang: [{X_scaled.min()}, {X_scaled.max()}]")
         return X_scaled
     def fit_transform(self, X):
         return self.fit(X).transform(X)
