@@ -11,35 +11,35 @@ LSQ_COEFFS = {
 
 def sigmoid(x):
     val = 1 / (1 + np.exp(-x))
-    logger.debug(f"sigmoid output: [{val.min()}, {val.max()}]")
+    logger.debug(f"sigmoid output: [{val.min():.4f}, {val.max():.4f}]")
     return val
 
 def minus_sigmoid(x):
     val = 1 / (1 + np.exp(x))
-    logger.debug(f"minus sigmoid output: [{val.min()}, {val.max()}]")
+    logger.debug(f"minus sigmoid output: [{val.min():.4f}, {val.max():.4f}]")
     return val
 
 
 
 def lsq3(x, clip=False):
-    logger.debug(f"lsq input: [{x.min()}, {x.max()}]")
+    logger.debug(f"lsq input: [{x.min():.4f}, {x.max():.4f}]")
     a0, a1, a3 = LSQ_COEFFS[3]
     val = a0 + a1 * x + a3 * x**3
-    logger.debug(f"lsq approx: [{val.min()}, {val.max()}]")
+    logger.debug(f"lsq approx: [{val.min():.4f}, {val.max():.4f}]")
     return np.clip(val, 0, 1) if clip else val
 
 def lsq5(x, clip=False):
-    logger.debug(f"lsq input: [{x.min()}, {x.max()}]")
+    logger.debug(f"lsq input: [{x.min():.4f}, {x.max():.4f}]")
     a0, a1, a3, a5 = LSQ_COEFFS[5]
     val = a0 + a1 * x + a3 * x**3 + a5 * x**5
-    logger.debug(f"lsq approx: [{val.min()}, {val.max()}]")
+    logger.debug(f"lsq approx: [{val.min():.4f}, {val.max():.4f}]")
     return np.clip(val, 0, 1) if clip else val
 
 def lsq7(x, clip=False):
-    logger.debug(f"lsq input: [{x.min()}, {x.max()}]")
+    logger.debug(f"lsq input: [{x.min():.4f}, {x.max():.4f}]")
     a0, a1, a3, a5, a7 = LSQ_COEFFS[7]
     val = a0 + a1 * x + a3 * x**3 + a5 * x**5 + a7 * x**7
-    logger.debug(f"lsq approx: [{val.min()}, {val.max()}]")
+    logger.debug(f"lsq approx: [{val.min():.4f}, {val.max():.4f}]")
     return np.clip(val, 0, 1) if clip else val
 
 
