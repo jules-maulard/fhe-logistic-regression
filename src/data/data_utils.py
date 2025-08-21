@@ -18,10 +18,12 @@ def num_to_name(num: int):
 def num_to_data_path(num: int) -> str:
     return f"../data/{num_to_name(num)}.txt"
 
-def load_data(data_path):
+def load_data(data_path, shuffle=True):
     logger.info(f"Loading data from {data_path}")
     data = np.loadtxt(data_path, delimiter=",", skiprows=1)
-    
+    if shuffle:
+        data = np.random.permutation(data)
+
     if data_path == num_to_data_path(1):
         y = data[:, 0]
         X = data[:, 1:]
