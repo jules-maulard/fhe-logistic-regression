@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import classification_report, confusion_matrix, roc_auc_score, mean_squared_error
-from typing import Tuple
 
 def print_classification_metrics(
     y_true, y_proba, 
@@ -26,7 +25,7 @@ def print_classification_metrics(
         print(f"\nMSE: {mse:.4f}")
         print(f"NMSE: {nmse:.4f}\n")
 
-def calculate_acc_auc_idash_style(z_data: np.ndarray, w_data: np.ndarray) -> Tuple[float, float]:
+def calculate_acc_auc_idash_style(z_data: np.ndarray, w_data: np.ndarray):
     sample_dim, factor_dim = z_data.shape
     
     TN = 0
@@ -64,8 +63,6 @@ def calculate_acc_auc_idash_style(z_data: np.ndarray, w_data: np.ndarray) -> Tup
                     auc += 1
         auc /= len(theta_TN) * len(theta_FP)
         print(f"AUC: {auc:.4f}")
-    
-    return correctness, auc
 
 
 def predict_proba(Z_train, beta, sigmoid):
