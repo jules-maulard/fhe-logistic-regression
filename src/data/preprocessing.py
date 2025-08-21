@@ -1,4 +1,5 @@
 import numpy as np
+import math
 
 import logging
 logger = logging.getLogger(__name__)
@@ -34,7 +35,7 @@ def init_wv(X, method='random'):
     n_features = X.shape[1]
     logger.info(f"Initializing weights for {n_features} features as: '{method}'")
 
-    valid_methods = ['zero', 'mean', 'random']
+    valid_methods = ['zero', 'mean', 'mean-idash', 'random']
     if method not in valid_methods:
         logger.warning(f"Unknown method '{method}'. Defaulting to 'random'")
         method = 'random'
@@ -43,6 +44,11 @@ def init_wv(X, method='random'):
         w = np.zeros(n_features)
     elif method == 'mean':
         w = np.mean(X, axis=0)
+    elif method == 'mean-idash':
+        w = np.mean(X, axis=0)
+        sdim_bits = math.ceil(math.log2(X.shape[0]))
+        sdim_pow = 1 << sdim_bits
+        w = w / sdim_pow
     elif method == 'random':
         w = np.random.randn(n_features) * 0.01
 
