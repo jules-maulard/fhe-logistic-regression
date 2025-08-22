@@ -4,6 +4,7 @@ from sklearn.metrics import classification_report, confusion_matrix, roc_auc_sco
 
 def print_classification_metrics(
     y_true, y_proba, 
+    show_acc_auc=True,
     show_report=True,
     show_matrix=True,  
     show_mse_nmse=True,
@@ -12,9 +13,10 @@ def print_classification_metrics(
 
     accuracy = np.mean(y_pred == y_true)
     auc = roc_auc_score(y_true, y_proba)
-    print(f"\nACC: {accuracy:.4f}")
-    print(f"AUC: {auc:.4f}")
 
+    if show_acc_auc:
+        print(f"\nACC: {accuracy:.4f}")
+        print(f"AUC: {auc:.4f}")
     if show_report:
         print(classification_report(y_true, y_pred))
     if show_matrix:
@@ -24,6 +26,8 @@ def print_classification_metrics(
         nmse = mse / np.var(y_true)
         print(f"\nMSE: {mse:.4f}")
         print(f"NMSE: {nmse:.4f}\n")
+
+    return accuracy, auc
 
 def calculate_acc_auc_idash_style(z_data: np.ndarray, w_data: np.ndarray):
     sample_dim, factor_dim = z_data.shape
@@ -63,6 +67,8 @@ def calculate_acc_auc_idash_style(z_data: np.ndarray, w_data: np.ndarray):
                     auc += 1
         auc /= len(theta_TN) * len(theta_FP)
         print(f"AUC: {auc:.4f}")
+    
+    return correctness, auc
 
 
 def predict_proba(Z_train, beta, sigmoid):
