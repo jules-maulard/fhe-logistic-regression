@@ -40,10 +40,6 @@ class LogisticRegressionPt:
             gamma = self.nag_momentum_update.update() if self.use_NAG else 0
             logger.debug(f"Learning rate: {alpha_t * n:.4f} - Smoothing parameter: {gamma}")
             pt_eval_beta = pt_v if self.use_NAG else pt_beta
-            
-            # pt_ip = np.dot(pt_Z, pt_eval_beta)
-            # pt_activated = self.sigmoid(pt_ip)
-            # pt_gradient = alpha_t * (np.dot(pt_activated, pt_Z))
 
             pt_ip = inner_product_pt(pt_Z, pt_eval_beta, f)
             pt_activated = self.sigmoid(pt_ip)
