@@ -33,8 +33,8 @@ class LogisticRegressionIDASH:
     ):
         n, f = Z_dims
         
-        for epoch in range(1, n_epoch + 1):
-            logger.info(f">>> Epoch {epoch+1} <<<")
+        for epoch in range(1, n_epoch+1):
+            logger.info(f">>> Epoch {epoch} <<<")
 
             alpha_t = self._update_lr(epoch, n, gamma_up, gamma_down)
             gamma = self.nag_momentum_update.update() if self.use_NAG else 0
@@ -58,9 +58,9 @@ class LogisticRegressionIDASH:
 
     def _update_lr(self, iteration, sampleDimTrain, gammaUp, gammaDown):
         if gammaDown > 0:
-            lr = gammaUp / gammaDown / sampleDimTrain
+            lr = (gammaUp / gammaDown) / sampleDimTrain
         else:
-            lr = gammaUp / (iteration - gammaDown) / sampleDimTrain
+            lr = (gammaUp / (iteration - gammaDown)) / sampleDimTrain
         return lr
 
     def predict_proba(self, pt_Z, beta, sigmoid=None):
